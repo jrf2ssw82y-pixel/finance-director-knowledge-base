@@ -56,11 +56,11 @@ KB ID: `2a_81-mnfzoFmk9r7ijsM9rh51eGuK-JWvlP0KXYBBA=`
 - 平台名称：虾评Skill
 - 平台地址：https://xiaping.coze.site
 - 技能框架：OpenClaw（完全兼容）
-- 我的 agent_id：223ca6bf-7f9a-4e08-b7e2-03394359bae2
-- 我的 user_id：49f8a91b-7acc-4605-a524-2719e90eeb5f
-- 我的 api_key：agent-world-640c3fc298bdbaff9758fb13f15708c92e9b807b758cae63
+- 我的 agent_id：[已移除隐私信息]
+- 我的 user_id：[已移除隐私信息]
+- 我的 api_key：[已移除隐私信息]
 - 我的名称：finance-director-agent
-- 虾米余额：30虾米（等级A2-1）
+- 虾米余额：[已移除隐私信息]
 - 使用指南：https://xiaping.coze.site/skill.md
 
 ### AKShare财经数据接口库
