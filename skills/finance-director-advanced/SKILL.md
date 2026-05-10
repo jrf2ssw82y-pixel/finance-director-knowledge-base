@@ -1,10 +1,10 @@
 ---
 name: Finance Director Advanced
 slug: finance-director-advanced
-version: 3.0.0
+version: 4.0.0
 homepage: https://clawic.com/skills/finance-director-advanced
-changelog: "Enhanced finance director skill with 15 models: 9 financial analysis models + 5 cash management models + 1 FP&A analyst model"
-description: Comprehensive CFO/Finance Director skillset combining 9 financial analysis models, 5 cash management models, and FP&A analyst capabilities. Provides strategic financial leadership, budget management, risk control, and cash flow optimization for enterprises.
+changelog: "Major upgrade v4.0.0: added Consolidated Financial Statements Model (No.12) with guided interactive consolidation, equity method adjustment, internal transaction elimination, and indirect/cross-shareholding support. Fixed encoding issues, removed MEMORY leaks, added .gitignore."
+description: Comprehensive CFO/Finance Director skillset combining 9 financial analysis models, 5 cash management models, FP&A analyst capabilities, and consolidated financial statements automation. Provides strategic financial leadership, budget management, risk control, cash flow optimization, and group consolidation reporting for enterprises.
 metadata: {"clawdbot":{"emoji":"💰","requires":{"bins":[]},"os":["linux","darwin","win32"]}}
 ---
 
@@ -219,7 +219,44 @@ metadata: {"clawdbot":{"emoji":"💰","requires":{"bins":[]},"os":["linux","darw
 - **优点**：财务战略结合、全面风险机会识别
 - **缺点**：需大量财务数据、主观性强
 
-### **五、FP&A分析师能力模型**
+### **五、合并报表模型（第12个模型）**
+针对集团多公司场景，自动编制合并财务报表，支持引导式交互。
+
+**适用场景**：
+- 集团公司编制合并资产负债表、合并利润表
+- 多层持股结构（直接/间接/交叉持股）的权益抵消
+- 内部交易抵消（存货未实现利润、内部债权债务、内部固定资产）
+- 需要引导式交互、无需手工计算合并抵销分录
+
+**核心类与功能**：
+- `BalanceSheet`：资产负债表数据结构（含资产/负债/权益属性计算）
+- `IncomeStatement`：利润表数据结构（含净利润计算）
+- `CompanyData`：单体公司完整数据封装
+- `Ownership`：持股关系（支持间接持股自动计算）
+- `InternalTransaction`：内部交易记录
+- `ElimEntry`：抵消分录记录
+
+**核心流程（ConsolidationEngine）**：
+1. **权益法调整** `_adjust_equity_method()`：将母公司对子公司的长期股权投资由成本法调整为权益法，按持股比例确认被投资方净资产变动
+2. **投资与权益抵消** `_eliminate_investment_equity()`：抵销母公司长期股权投资与子公司所有者权益（含少数股东权益）
+3. **投资收益与利润分配抵消** `_eliminate_investment_income()`：抵销母公司投资收益与子公司利润分配
+4. **内部债权债务抵消** `_eliminate_internal_receivables()`：应收/应付、预付/预收等内部往来抵销
+5. **存货未实现利润抵消** `_eliminate_internal_inventory()`：抵销内部购销中未实现利润（含已出售/未出售分部）
+6. **内部固定资产抵消** `_eliminate_internal_fixed_assets()`：抵销内部固定资产交易及未实现利润
+
+**引导式交互入口**：
+- `guided_consolidation()`：逐步引导用户录入子公司数据、持股关系、内部交易，自动生成合并报表
+- `demo_case_pq()`：P→S→T 三层间接持股完整演示案例
+
+**间接/交叉持股处理**：
+- 间接持股：通过中间公司持有下层公司股权，自动计算实际持股比例
+- 交叉持股：A持有B、B持有A，通过迭代法求解实际权益
+
+**文件位置**：
+- 脚本：`scripts/consolidated_statements.py`
+- 参考文档：`references/consolidated_statements_guide.md`
+
+### **六、FP&A分析师能力模型**
 作为财务总监，我已经整合了FP&A分析师的核心能力：
 
 #### **FP&A的核心信念体系**
@@ -446,12 +483,14 @@ metadata: {"clawdbot":{"emoji":"💰","requires":{"bins":[]},"os":["linux","darw
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/scripts/finance_director.py` - 财务总监分析脚本
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/scripts/dupont_analysis.py` - 杜邦分析脚本
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/scripts/finance_analysis.py` - 财务分析脚本
+✅ `/root/.openclaw/workspace/skills/finance-director-advanced/scripts/consolidated_statements.py` - 合并报表模型实现（v4.0.0新增）
 
 ### **参考文档**
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/references/financial_models_summary.md` - 九大财务模型详解
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/references/cash_management_summary.md` - 资金管理五大模型详解
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/references/finance_director_framework.md` - 财务总监分析框架
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/references/元宝派资金管理五大模型笔记.md` - 元宝派技能笔记
+✅ `/root/.openclaw/workspace/skills/finance-director-advanced/references/consolidated_statements_guide.md` - 合并报表编制指南（v4.0.0新增）
 
 ### **测试脚本**
 ✅ `/root/.openclaw/workspace/skills/finance-director-advanced/test_finance_director_full.py` - 完整技能测试脚本
@@ -557,6 +596,13 @@ cashflow_budget = cmm.cashflow_rolling_budget(
 - 战略落地保障
 - 财务权限设计
 - 持续学习进化
+- 合并报表
+- 合并财务报表
+- 抵消分录
+- 权益法调整
+- 内部交易抵消
+- 间接持股
+- 交叉持股
 
 ## 安全与隐私
 此技能仅提供战略指导，不处理机密财务数据。
@@ -570,6 +616,19 @@ cashflow_budget = cmm.cashflow_rolling_budget(
 ✅ **学习进化**：与学派里的小伙伴共享学习成果，共同进步
 
 ## 更新历史
+
+**版本4.0.0**：
+✅ 新增第12个模型：合并报表自动编制模型（Consolidated Statements Model）
+✅ 支持引导式交互：逐步引导用户录入子公司数据、持股关系、内部交易
+✅ 支持直接持股、间接持股（多层穿透）、交叉持股的权益抵消
+✅ 六大抵消分录：权益法调整、投资与权益抵消、投资收益抵消、内部债权债务抵消、存货未实现利润抵消、内部固定资产抵消
+✅ 新增 `scripts/consolidated_statements.py`（约600行核心引擎）
+✅ 新增 `references/consolidated_statements_guide.md`（编制指南）
+✅ 修复 `manufacturing-finance-all.md` 乱码问题（已确认为UTF-8正常）
+✅ 删除泄露隐私文件（MEMORY.md、memory/2026-05-06.md）
+✅ 删除冗余文件（finance-director-advanced.zip、finance_knowledge_base_content.md）
+✅ 新增 `.gitignore` 防止下次误提交敏感文件
+✅ 版本号升级至 4.0.0
 
 **版本3.0.0**：
 ✅ 增加了FP&A分析师能力模型

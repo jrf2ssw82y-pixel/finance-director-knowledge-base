@@ -2,35 +2,37 @@
 
 ## 技能概述
 
-这是一个完整的财务总监技能包，包含了九大财务模型和五大资金管理模型，总共14个模型。基于福宝（团队钱包和风向标）的学习和整合，为团队成员提供完整的财务总监能力。
+这是一个完整的财务总监技能包，包含了九大财务模型、五大资金管理模型，以及新增的合并报表自动编制模型，总共15个模型。基于福宝（团队钱包和风向标）的学习和整合，为团队成员提供完整的财务总监能力，支持集团合并报表编制。
 
 ## 技能结构
 
 ### **目录结构**
 ```
 finance-director-advanced/
-├── SKILL.md                    # 技能主文档（11180字节）
-├── scripts/                     # 脚本目录
-│   ├── financial_models.py      # 九大财务模型实现（18653字节）
-│   ├── cash_management_models.py # 五大资金管理模型实现（21729字节）
-│   ├── cash_management.py      # CFO现金管理模型实现（修复后）
-│   ├── finance_director.py     # 财务总监分析脚本（15992字节）
-│   ├── dupont_analysis.py      # 杜邦分析脚本（5265字节）
-│   ├── finance_analysis.py     # 财务分析脚本（6420字节）
+├── SKILL.md                             # 技能主文档（v4.0.0）
+├── scripts/                             # 脚本目录
+│   ├── financial_models.py              # 九大财务模型实现
+│   ├── cash_management_models.py        # 五大资金管理模型实现
+│   ├── cash_management.py              # CFO现金管理模型实现
+│   ├── finance_director.py             # 财务总监分析脚本
+│   ├── dupont_analysis.py              # 杜邦分析脚本
+│   ├── finance_analysis.py              # 财务分析脚本
+│   ├── consolidated_statements.py       # 合并报表模型实现（v4.0.0新增）
 │   └── __pycache__/
-├── references/                  # 参考文档目录
-│   ├── financial_models_summary.md  # 九大财务模型详解（7341字节）
-│   ├── cash_management_summary.md  # 资金管理五大模型详解（7723字节）
-│   ├── finance_director_framework.md # 财务总监分析框架（11078字节）
-│   ├── finance_director_mindset.md  # 财务总监思维模式（11358字节）
-│   ├── 元宝派资金管理五大模型笔记.md # 元宝派技能笔记（8468字节）
-│   └── 元宝派资金管理五大模型笔记.md # 共享文件夹笔记（8468字节）
-├── test/                       # 测试目录
-│   ├── test_finance_director_full.py # 完整测试脚本
-│   ├── test_nine_financial_models.py # 九大财务模型测试
-│   ├── test_skill.py           # 技能基础测试
-│   └── test_skill_simple.py   # 简单技能测试
-└── README.md                   # 技能说明
+├── references/                          # 参考文档目录
+│   ├── financial_models_summary.md      # 九大财务模型详解
+│   ├── cash_management_summary.md       # 资金管理五大模型详解
+│   ├── finance_director_framework.md   # 财务总监分析框架
+│   ├── finance_director_mindset.md     # 财务总监思维模式
+│   ├── consolidated_statements_guide.md # 合并报表编制指南（v4.0.0新增）
+│   ├── 元宝派资金管理五大模型笔记.md   # 元宝派技能笔记
+│   └── 元宝派资金管理五大模型笔记.md   # 共享文件夹笔记
+├── test/                               # 测试目录
+│   ├── test_finance_director_full.py   # 完整测试脚本
+│   ├── test_nine_financial_models.py   # 九大财务模型测试
+│   ├── test_skill.py                   # 技能基础测试
+│   └── test_skill_simple.py           # 简单技能测试
+└── README.md                           # 技能说明
 ```
 
 ## 模型数量
@@ -52,6 +54,14 @@ finance-director-advanced/
 ✅ 存货占用模型  
 ✅ 信用决策模型  
 ✅ 现金流预算模型  
+
+### **合并报表模型（v4.0.0 新增）**
+✅ 引导式合并报表编制（交互式录入子公司数据）  
+✅ 权益法调整（成本法→权益法自动调整）  
+✅ 投资与权益抵消（长期股权投资与所有者权益抵消）  
+✅ 内部交易抵消（存货/债权债务/固定资产未实现利润）  
+✅ 间接持股与交叉持股处理（多层穿透、迭代法求解）  
+✅ 合并资产负债表与合并利润表自动生成  
 
 ## 财务总监职责
 
@@ -139,11 +149,27 @@ finance-director-advanced/
 
 ## 更新历史
 
-✅ **版本2.0.0**：增加了资金管理五大模型，整合了CFO核心原则  
-✅ **来源文档**：《财务分析必备：九大财务模型详解》和《财务人必会的资金管理五大模型》  
-✅ **创建者**：福宝（团队钱包和风向标）  
-✅ **创建时间**：2026年04月18日  
-✅ **技能目标**：帮助元宝派成员掌握财务总监核心技能  
+✅ **版本4.0.0（2026年5月）**：
+  - 新增合并报表自动编制模型（第12个模型）
+  - 支持引导式交互、权益法调整、六大抵消分录
+  - 支持间接持股（多层穿透）和交叉持股（迭代法求解）
+  - 新增 `scripts/consolidated_statements.py` 和 `references/consolidated_statements_guide.md`
+  - 修复 `manufacturing-finance-all.md` 乱码问题
+  - 删除泄露隐私文件（MEMORY.md、memory/）
+  - 删除冗余文件（finance-director-advanced.zip、空文件）
+  - 新增 `.gitignore` 防止误提交敏感文件
+
+✅ **版本3.0.0（2026年4月）**：
+  - 增加了FP&A分析师能力模型
+  - 整合了FP&A分析师的核心信念体系和工作流程
+  - 增强了财务总监与FP&A的协同能力
+
+✅ **版本2.0.0（2026年4月）**：
+  - 增加了资金管理五大模型，整合了CFO核心原则
+  - 来源文档：《财务分析必备：九大财务模型详解》和《财务人必会的资金管理五大模型》
+  - 创建者：福宝（团队钱包和风向标）
+  - 创建时间：2026年04月18日
+  - 技能目标：帮助元宝派成员掌握财务总监核心技能
 
 ## 持续学习进化
 
